@@ -19,10 +19,10 @@ python manage.py runserver
 ---------------Login Api url & parameter ------------
 url - https://letsgoapi.herokuapp.com
 parameter - 
-{
-  "username":"001vijay",
-  "password":"vijay@123"
-}
+ {
+   "username":"001vijay",
+   "password":"vijay@123"
+ }
 
 ------------------Logout Api----------------
 url  - https://letsgoapi.herokuapp.com/logout/
