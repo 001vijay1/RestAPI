@@ -48,12 +48,20 @@ class LoginView(APIView):
         username = data.get('username')
         password = data.get('password')
         if username and password:
-            user = authenticate(request,username=username,password=password)
-            if user is not None:
-                login(request,user)
-                u = User.objects.filter(username=username).values('first_name','last_name','username','email')
+            usr = authenticate(request,username=username,password=password)
+            if usr is not None:
+                login(request,usr)
+                u = User.objects.get(username=username)
+                data = {'name':f'{u.first_name} {u.last_name}','username':u.username}
+                try:
+                    u_adrs = UserAddress.objects.get(user=u.id)
+                    data['phone'] = u_adrs.phone_number
+                    data['address'] = u_adrs.address
+                except:
+                    data['phone'] = ''
+                    data['address'] = ''
                 context['status'] = status.HTTP_200_OK
-                context['user'] = u
+                context['user'] = data
             else:
                 context['status'] = status.HTTP_400_BAD_REQUEST
                 context['message'] = "Authentication Error, Please try again."
